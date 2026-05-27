@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Yalem Tilahun – Data Scientist specializing in Machine Learning, AI, Data Visualization, Deep Learning & Computer Vision." />
+<title>Yalem Tilahun | Data Scientist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --c1: #FF6B35;
+    --c2: #FFD23F;
+    --c3: #06D6A0;
+    --c4: #118AB2;
+    --c5: #EF476F;
+    --bg: #0A0A0F;
+    --bg2: #111118;
+    --bg3: #18181F;
+    --surface: #1E1E28;
+    --border: rgba(255,255,255,0.08);
+    --text: #F5F5F0;
+    --muted: rgba(245,245,240,0.55);
+    --radius: 16px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+    line-height: 1.7;
+  }
+
+  /* ── Noise overlay ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 0; opacity: 0.4;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.1rem 3rem;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800; font-size: 1.15rem;
+    background: linear-gradient(90deg, var(--c1), var(--c2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: var(--muted); text-decoration: none; font-size: 0.9rem;
+    font-weight: 400; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+  .nav-cta {
+    background: var(--c1); color: #fff; border: none;
+    padding: 0.55rem 1.3rem; border-radius: 50px;
+    font-size: 0.88rem; font-weight: 500; cursor: pointer;
+    text-decoration: none; font-family: 'DM Sans', sans-serif;
+    transition: transform 0.2s, opacity 0.2s;
+  }
+  .nav-cta:hover { opacity: 0.88; transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  #hero {
+    position: relative; min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 7rem 3rem 4rem;
+    overflow: hidden;
+  }
+  .hero-bg-blob {
+    position: absolute; border-radius: 50%; filter: blur(90px);
+    pointer-events: none;
+  }
+  .blob1 { width: 600px; height: 600px; background: rgba(255,107,53,0.18); top: -10%; right: -8%; }
+  .blob2 { width: 500px; height: 500px; background: rgba(6,214,160,0.12); bottom: -5%; left: -5%; }
+  .blob3 { width: 350px; height: 350px; background: rgba(255,210,63,0.1); top: 30%; left: 35%; }
+
+  .hero-content { position: relative; z-index: 1; max-width: 700px; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(255,107,53,0.12); border: 1px solid rgba(255,107,53,0.3);
+    color: var(--c1); border-radius: 50px; padding: 0.4rem 1rem;
+    font-size: 0.82rem; font-weight: 500; margin-bottom: 1.8rem;
+  }
+  .hero-badge span { width: 7px; height: 7px; background: var(--c1); border-radius: 50%; display: inline-block; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.8)} }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800; font-size: clamp(3rem, 7vw, 5.5rem);
+    line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 1.5rem;
+  }
+  .gradient-text {
+    background: linear-gradient(135deg, var(--c1) 0%, var(--c2) 40%, var(--c3) 80%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .hero-sub {
+    font-size: 1.15rem; color: var(--muted); max-width: 540px;
+    margin-bottom: 2.5rem; font-weight: 300;
+  }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--c1), #ff8c5a);
+    color: #fff; border: none; padding: 0.85rem 2rem;
+    border-radius: 50px; font-size: 1rem; font-weight: 500;
+    cursor: pointer; text-decoration: none; font-family: 'DM Sans', sans-serif;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 8px 30px rgba(255,107,53,0.35);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(255,107,53,0.5); }
+  .btn-outline {
+    background: transparent; color: var(--text);
+    border: 1px solid var(--border); padding: 0.85rem 2rem;
+    border-radius: 50px; font-size: 1rem; font-weight: 400;
+    cursor: pointer; text-decoration: none; font-family: 'DM Sans', sans-serif;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .btn-outline:hover { border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.05); }
+
+  .hero-stats {
+    position: relative; z-index: 1;
+    display: flex; gap: 2.5rem; margin-top: 4rem; flex-wrap: wrap;
+  }
+  .stat { }
+  .stat-num {
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 2rem;
+    background: linear-gradient(135deg, var(--c2), var(--c3));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .stat-label { font-size: 0.82rem; color: var(--muted); margin-top: 0.1rem; }
+
+  /* Floating cards */
+  .hero-floating {
+    position: absolute; right: 3rem; top: 50%; transform: translateY(-50%);
+    display: flex; flex-direction: column; gap: 1.2rem; z-index: 1;
+  }
+  .float-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1rem 1.3rem;
+    min-width: 220px;
+    animation: floatCard 3s ease-in-out infinite alternate;
+  }
+  .float-card:nth-child(2) { animation-delay: 0.8s; margin-left: 2rem; }
+  .float-card:nth-child(3) { animation-delay: 1.6s; }
+  @keyframes floatCard { from{transform:translateY(0)} to{transform:translateY(-10px)} }
+  .float-card-label { font-size: 0.75rem; color: var(--muted); margin-bottom: 0.5rem; }
+  .float-card-value { font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 700; }
+  .fc-bar { height: 4px; border-radius: 2px; margin-top: 0.6rem; background: var(--bg3); overflow: hidden; }
+  .fc-bar-inner { height: 100%; border-radius: 2px; }
+
+  /* ── SECTION BASE ── */
+  section { position: relative; z-index: 1; }
+  .section-inner { max-width: 1100px; margin: 0 auto; padding: 6rem 3rem; }
+  .section-label {
+    font-size: 0.78rem; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--c1); margin-bottom: 1rem;
+  }
+  .section-title {
+    font-family: 'Syne', sans-serif; font-weight: 700;
+    font-size: clamp(1.8rem, 4vw, 2.8rem); line-height: 1.15;
+    margin-bottom: 1rem;
+  }
+  .section-sub { color: var(--muted); font-size: 1.05rem; max-width: 560px; }
+
+  /* ── ABOUT ── */
+  #about { background: var(--bg2); }
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
+    align-items: center; margin-top: 3.5rem;
+  }
+  .about-text p { color: var(--muted); margin-bottom: 1rem; font-size: 1rem; }
+  .about-text p strong { color: var(--text); }
+  .skills-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+    margin-top: 2rem;
+  }
+  .skill-pill {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 0.75rem 1rem;
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+  .skill-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .skill-pill span { font-size: 0.88rem; font-weight: 400; }
+
+  .about-visual {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 24px; padding: 2rem; position: relative; overflow: hidden;
+  }
+  .about-visual-label { font-size: 0.8rem; color: var(--muted); margin-bottom: 1.5rem; }
+  .chart-bars { display: flex; align-items: flex-end; gap: 0.6rem; height: 140px; }
+  .bar-wrap { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; flex: 1; }
+  .bar {
+    width: 100%; border-radius: 6px 6px 0 0;
+    animation: growBar 1.2s ease forwards;
+    transform-origin: bottom;
+    transform: scaleY(0);
+  }
+  @keyframes growBar { to { transform: scaleY(1); } }
+  .bar-lbl { font-size: 0.7rem; color: var(--muted); text-align: center; }
+  .about-visual-divider { height: 1px; background: var(--border); margin: 1.5rem 0; }
+  .expertise-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .chip {
+    font-size: 0.78rem; padding: 0.3rem 0.75rem;
+    border-radius: 50px; border: 1px solid;
+    font-weight: 400;
+  }
+
+  /* ── SERVICES / WHAT I DO ── */
+  #services { background: var(--bg); }
+  .services-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+    margin-top: 3.5rem;
+  }
+  .service-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 20px; padding: 2rem;
+    transition: border-color 0.3s, transform 0.3s;
+    position: relative; overflow: hidden;
+  }
+  .service-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    border-radius: 20px 20px 0 0;
+  }
+  .service-card:hover { border-color: rgba(255,255,255,0.18); transform: translateY(-4px); }
+  .service-icon {
+    width: 48px; height: 48px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; margin-bottom: 1.3rem;
+  }
+  .service-card h3 {
+    font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 600;
+    margin-bottom: 0.6rem;
+  }
+  .service-card p { font-size: 0.9rem; color: var(--muted); line-height: 1.6; }
+
+  /* ── PROJECTS ── */
+  #projects { background: var(--bg2); }
+  .projects-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem;
+    margin-top: 3.5rem;
+  }
+  .project-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 20px; overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .project-card:hover { border-color: rgba(255,255,255,0.18); transform: translateY(-4px); }
+  .project-card.featured { grid-column: span 2; display: grid; grid-template-columns: 1fr 1fr; }
+  .project-visual {
+    height: 200px; display: flex; align-items: center; justify-content: center;
+    font-size: 3.5rem; position: relative; overflow: hidden;
+  }
+  .project-card.featured .project-visual { height: auto; }
+  .project-body { padding: 1.8rem; }
+  .project-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  .tag {
+    font-size: 0.72rem; padding: 0.25rem 0.65rem;
+    border-radius: 50px; background: rgba(255,255,255,0.07);
+    color: var(--muted); border: 1px solid var(--border);
+  }
+  .project-body h3 {
+    font-family: 'Syne', sans-serif; font-weight: 600; font-size: 1.15rem;
+    margin-bottom: 0.6rem;
+  }
+  .project-body p { font-size: 0.9rem; color: var(--muted); margin-bottom: 1.2rem; }
+  .project-link {
+    font-size: 0.85rem; color: var(--c3); text-decoration: none; font-weight: 500;
+    display: inline-flex; align-items: center; gap: 0.3rem; transition: gap 0.2s;
+  }
+  .project-link:hover { gap: 0.5rem; }
+
+  /* ── TESTIMONIALS ── */
+  #testimonials { background: var(--bg); }
+  .testimonials-grid {
+    display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem;
+    margin-top: 3.5rem;
+  }
+  .testimonial-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 20px; padding: 2rem;
+  }
+  .stars { color: var(--c2); font-size: 0.9rem; margin-bottom: 1rem; }
+  .testimonial-card p { font-size: 0.92rem; color: var(--muted); font-style: italic; margin-bottom: 1.5rem; }
+  .testimonial-author { display: flex; align-items: center; gap: 0.75rem; }
+  .author-avatar {
+    width: 38px; height: 38px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.8rem; font-weight: 600;
+  }
+  .author-name { font-size: 0.88rem; font-weight: 500; }
+  .author-role { font-size: 0.78rem; color: var(--muted); }
+
+  /* ── CONTACT ── */
+  #contact { background: var(--bg2); }
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr 1.4fr; gap: 4rem;
+    margin-top: 3.5rem; align-items: start;
+  }
+  .contact-info h3 { font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; }
+  .contact-info p { color: var(--muted); font-size: 0.95rem; margin-bottom: 2rem; }
+  .contact-methods { display: flex; flex-direction: column; gap: 1rem; }
+  .contact-method {
+    display: flex; align-items: center; gap: 1rem;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 1rem 1.2rem;
+    text-decoration: none; color: var(--text);
+    transition: border-color 0.2s;
+  }
+  .contact-method:hover { border-color: rgba(255,255,255,0.2); }
+  .contact-method-icon { font-size: 1.3rem; }
+  .contact-method-label { font-size: 0.78rem; color: var(--muted); }
+  .contact-method-value { font-size: 0.92rem; font-weight: 400; }
+
+  /* Contact Form */
+  .contact-form {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 24px; padding: 2.5rem;
+  }
+  .contact-form h3 { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 600; margin-bottom: 1.8rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-group { margin-bottom: 1.2rem; }
+  .form-group label { display: block; font-size: 0.82rem; color: var(--muted); margin-bottom: 0.4rem; }
+  .form-group input, .form-group textarea, .form-group select {
+    width: 100%; background: var(--bg3); border: 1px solid var(--border);
+    color: var(--text); border-radius: 10px; padding: 0.75rem 1rem;
+    font-size: 0.95rem; font-family: 'DM Sans', sans-serif;
+    transition: border-color 0.2s; outline: none; resize: vertical;
+  }
+  .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+    border-color: var(--c1);
+  }
+  .form-group select option { background: var(--bg3); }
+  .form-submit {
+    width: 100%; background: linear-gradient(135deg, var(--c1), #ff8c5a);
+    color: #fff; border: none; padding: 1rem;
+    border-radius: 50px; font-size: 1rem; font-weight: 500;
+    cursor: pointer; font-family: 'DM Sans', sans-serif;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 8px 30px rgba(255,107,53,0.3);
+    margin-top: 0.5rem;
+  }
+  .form-submit:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(255,107,53,0.5); }
+  .form-success {
+    display: none; background: rgba(6,214,160,0.1); border: 1px solid rgba(6,214,160,0.3);
+    color: var(--c3); border-radius: 12px; padding: 1rem 1.2rem;
+    font-size: 0.9rem; margin-top: 1rem; text-align: center;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--bg); border-top: 1px solid var(--border);
+    padding: 2.5rem 3rem; display: flex;
+    align-items: center; justify-content: space-between; flex-wrap: wrap;
+    gap: 1rem; position: relative; z-index: 1;
+  }
+  .footer-logo {
+    font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.05rem;
+    background: linear-gradient(90deg, var(--c1), var(--c2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .footer-copy { font-size: 0.82rem; color: var(--muted); }
+  .footer-socials { display: flex; gap: 1rem; }
+  .social-link {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--surface); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    text-decoration: none; color: var(--muted); font-size: 0.9rem;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .social-link:hover { border-color: rgba(255,255,255,0.3); color: var(--text); }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    #hero { padding: 6rem 1.5rem 3rem; }
+    .hero-floating { display: none; }
+    .section-inner { padding: 4rem 1.5rem; }
+    .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .services-grid { grid-template-columns: 1fr; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .project-card.featured { grid-column: span 1; grid-template-columns: 1fr; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    footer { flex-direction: column; text-align: center; align-items: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">YT</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#testimonials">Testimonials</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Hire Me</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg-blob blob1"></div>
+  <div class="hero-bg-blob blob2"></div>
+  <div class="hero-bg-blob blob3"></div>
+
+  <div>
+    <div class="hero-content">
+      <div class="hero-badge"><span></span> Available for new projects</div>
+      <h1>
+        Turning Data<br>
+        Into <span class="gradient-text">Decisions</span>
+      </h1>
+      <p class="hero-sub">
+        Hi, I'm <strong>Yalem Tilahun</strong> — a Data Scientist and AI practitioner blending machine learning, computer vision, and full-stack data engineering to solve real-world problems.
+      </p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn-primary">Let's Work Together →</a>
+        <a href="#projects" class="btn-outline">View My Work</a>
+      </div>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">50+</div><div class="stat-label">Projects Delivered</div></div>
+      <div class="stat"><div class="stat-num">15+</div><div class="stat-label">ML Models in Production</div></div>
+      <div class="stat"><div class="stat-num">5+</div><div class="stat-label">Years of Experience</div></div>
+      <div class="stat"><div class="stat-num">30+</div><div class="stat-label">Happy Clients</div></div>
+    </div>
+  </div>
+
+  <!-- Floating data cards -->
+  <div class="hero-floating">
+    <div class="float-card">
+      <div class="float-card-label">Model Accuracy</div>
+      <div class="float-card-value" style="color: var(--c3)">97.4%</div>
+      <div class="fc-bar"><div class="fc-bar-inner" style="width:97%;background:var(--c3)"></div></div>
+    </div>
+    <div class="float-card">
+      <div class="float-card-label">Data Processed</div>
+      <div class="float-card-value" style="color: var(--c2)">2.8 TB</div>
+      <div class="fc-bar"><div class="fc-bar-inner" style="width:75%;background:var(--c2)"></div></div>
+    </div>
+    <div class="float-card">
+      <div class="float-card-label">Prediction Speed</div>
+      <div class="float-card-value" style="color: var(--c1)">12 ms</div>
+      <div class="fc-bar"><div class="fc-bar-inner" style="width:90%;background:var(--c1)"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <div class="section-label">About Me</div>
+    <div class="section-title">Data Science <span class="gradient-text">meets Real Impact</span></div>
+    <div class="section-sub">I bridge the gap between raw data and actionable intelligence.</div>
+
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>I'm <strong>Yalem Tilahun</strong>, a passionate Data Scientist with expertise spanning the full data lifecycle — from wrangling messy datasets to deploying production-grade machine learning systems.</p>
+        <p>My work sits at the intersection of <strong>Machine Learning, Computer Vision, and Data Storytelling</strong>. I enjoy not just building models, but communicating their value clearly to non-technical stakeholders.</p>
+        <p>Whether you're a startup looking to build your first data pipeline, or an enterprise ready to scale AI, I'm here to help you get there — practically and efficiently.</p>
+
+        <div class="skills-grid">
+          <div class="skill-pill"><span class="skill-dot" style="background:var(--c1)"></span><span>Python & R</span></div>
+          <div class="skill-pill"><span class="skill-dot" style="background:var(--c2)"></span><span>TensorFlow / PyTorch</span></div>
+          <div class="skill-pill"><span class="skill-dot" style="background:var(--c3)"></span><span>Scikit-learn</span></div>
+          <div class="skill-pill"><span class="skill-dot" style="background:var(--c4)"></span><span>SQL & NoSQL</span></div>
+          <div class="skill-pill"><span class="skill-dot" style="background:var(--c5)"></span><span>Tableau / Power BI</span></div>
+          <div class="skill-pill"><span class="skill-dot" style="background:var(--c1)"></span><span>MLflow / Airflow</span></div>
+          <div class="skill-pill"><span class="skill-dot" style="background:var(--c3)"></span><span>AWS / GCP</span></div>
+          <div class="skill-pill"><span class="skill-dot" style="background:var(--c2)"></span><span>Docker / Kubernetes</span></div>
+        </div>
+      </div>
+
+      <div class="about-visual reveal">
+        <div class="about-visual-label">Core Competency Depth</div>
+        <div class="chart-bars">
+          <div class="bar-wrap">
+            <div class="bar" style="height:92%;background:linear-gradient(180deg,var(--c1),rgba(255,107,53,0.3));animation-delay:0.1s"></div>
+            <div class="bar-lbl">ML/AI</div>
+          </div>
+          <div class="bar-wrap">
+            <div class="bar" style="height:85%;background:linear-gradient(180deg,var(--c2),rgba(255,210,63,0.3));animation-delay:0.2s"></div>
+            <div class="bar-lbl">DataViz</div>
+          </div>
+          <div class="bar-wrap">
+            <div class="bar" style="height:78%;background:linear-gradient(180deg,var(--c3),rgba(6,214,160,0.3));animation-delay:0.3s"></div>
+            <div class="bar-lbl">CV</div>
+          </div>
+          <div class="bar-wrap">
+            <div class="bar" style="height:88%;background:linear-gradient(180deg,var(--c4),rgba(17,138,178,0.3));animation-delay:0.4s"></div>
+            <div class="bar-lbl">Full Stack</div>
+          </div>
+          <div class="bar-wrap">
+            <div class="bar" style="height:70%;background:linear-gradient(180deg,var(--c5),rgba(239,71,111,0.3));animation-delay:0.5s"></div>
+            <div class="bar-lbl">NLP</div>
+          </div>
+        </div>
+        <div class="about-visual-divider"></div>
+        <div class="expertise-chips">
+          <span class="chip" style="color:var(--c1);border-color:rgba(255,107,53,0.3)">Neural Networks</span>
+          <span class="chip" style="color:var(--c2);border-color:rgba(255,210,63,0.3)">Time Series</span>
+          <span class="chip" style="color:var(--c3);border-color:rgba(6,214,160,0.3)">Object Detection</span>
+          <span class="chip" style="color:var(--c4);border-color:rgba(17,138,178,0.3)">Data Pipelines</span>
+          <span class="chip" style="color:var(--c5);border-color:rgba(239,71,111,0.3)">Statistical Analysis</span>
+          <span class="chip" style="color:var(--c1);border-color:rgba(255,107,53,0.3)">LLM Integration</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-inner">
+    <div class="section-label">What I Do</div>
+    <div class="section-title">Services I <span class="gradient-text">Offer</span></div>
+    <div class="section-sub">End-to-end data science consulting — from strategy to production.</div>
+
+    <div class="services-grid">
+      <div class="service-card reveal" style="animation-delay:0.1s">
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--c1),var(--c2));border-radius:20px 20px 0 0"></div>
+        <div class="service-icon" style="background:rgba(255,107,53,0.12)">🤖</div>
+        <h3>Machine Learning & AI</h3>
+        <p>Custom predictive models, classification systems, recommendation engines, and automated decision-making pipelines tailored to your data.</p>
+      </div>
+      <div class="service-card reveal" style="animation-delay:0.15s">
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--c2),var(--c3));border-radius:20px 20px 0 0"></div>
+        <div class="service-icon" style="background:rgba(255,210,63,0.12)">📊</div>
+        <h3>Data Analysis & Visualization</h3>
+        <p>Transform complex datasets into compelling visual stories. Interactive dashboards, KPI reporting, and executive-level data narratives.</p>
+      </div>
+      <div class="service-card reveal" style="animation-delay:0.2s">
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--c3),var(--c4));border-radius:20px 20px 0 0"></div>
+        <div class="service-icon" style="background:rgba(6,214,160,0.12)">👁️</div>
+        <h3>Deep Learning & Computer Vision</h3>
+        <p>Image classification, object detection, video analysis, and custom CNN architectures built for your specific visual recognition needs.</p>
+      </div>
+      <div class="service-card reveal" style="animation-delay:0.25s">
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--c4),var(--c5));border-radius:20px 20px 0 0"></div>
+        <div class="service-icon" style="background:rgba(17,138,178,0.12)">🔧</div>
+        <h3>Full-Stack Data Engineering</h3>
+        <p>End-to-end data infrastructure: ETL pipelines, data warehouses, REST APIs, and scalable systems that move and serve data reliably.</p>
+      </div>
+      <div class="service-card reveal" style="animation-delay:0.3s">
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--c5),var(--c1));border-radius:20px 20px 0 0"></div>
+        <div class="service-icon" style="background:rgba(239,71,111,0.12)">🧠</div>
+        <h3>AI Consulting & Strategy</h3>
+        <p>Help your organization identify AI opportunities, build roadmaps, and implement data governance frameworks that actually work.</p>
+      </div>
+      <div class="service-card reveal" style="animation-delay:0.35s">
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--c1),var(--c4));border-radius:20px 20px 0 0"></div>
+        <div class="service-icon" style="background:rgba(255,107,53,0.12)">📈</div>
+        <h3>Predictive Analytics</h3>
+        <p>Forecasting models, churn prediction, demand planning, and anomaly detection systems powered by statistical and ML methods.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-inner">
+    <div class="section-label">Portfolio</div>
+    <div class="section-title">Selected <span class="gradient-text">Projects</span></div>
+    <div class="section-sub">Real-world data science work across industries and problem domains.</div>
+
+    <div class="projects-grid">
+      <div class="project-card featured reveal">
+        <div class="project-visual" style="background:linear-gradient(135deg,rgba(255,107,53,0.15),rgba(255,210,63,0.1));padding:2rem;align-items:center;justify-content:center;flex-direction:column;gap:1rem">
+          <div style="font-size:3rem">🧬</div>
+          <div style="text-align:center">
+            <div style="font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:600;color:var(--c2);margin-bottom:0.3rem">Health AI Dashboard</div>
+            <div style="font-size:0.8rem;color:var(--muted)">Real-time patient risk scoring</div>
+          </div>
+        </div>
+        <div class="project-body">
+          <div class="project-tags">
+            <span class="tag">Python</span><span class="tag">TensorFlow</span><span class="tag">FastAPI</span><span class="tag">React</span>
+          </div>
+          <h3>Patient Risk Prediction Platform</h3>
+          <p>Built an end-to-end ML platform for a healthcare provider to predict patient readmission risk with 94% accuracy. Included an interactive dashboard for clinical staff and automated alert systems.</p>
+          <a href="#contact" class="project-link">View Case Study →</a>
+        </div>
+      </div>
+
+      <div class="project-card reveal" style="animation-delay:0.1s">
+        <div class="project-visual" style="background:linear-gradient(135deg,rgba(6,214,160,0.15),rgba(17,138,178,0.1))">🛰️</div>
+        <div class="project-body">
+          <div class="project-tags"><span class="tag">PyTorch</span><span class="tag">YOLO</span><span class="tag">OpenCV</span></div>
+          <h3>Satellite Image Crop Classifier</h3>
+          <p>Computer vision model classifying crop types from satellite imagery across 12 categories at 91% mAP for agricultural analytics.</p>
+          <a href="#contact" class="project-link">View Case Study →</a>
+        </div>
+      </div>
+
+      <div class="project-card reveal" style="animation-delay:0.15s">
+        <div class="project-visual" style="background:linear-gradient(135deg,rgba(239,71,111,0.15),rgba(255,107,53,0.1))">💬</div>
+        <div class="project-body">
+          <div class="project-tags"><span class="tag">NLP</span><span class="tag">BERT</span><span class="tag">Streamlit</span></div>
+          <h3>Amharic Sentiment Analysis</h3>
+          <p>Multilingual NLP system for Amharic social media sentiment classification, filling a critical gap in African language AI tooling.</p>
+          <a href="#contact" class="project-link">View Case Study →</a>
+        </div>
+      </div>
+
+      <div class="project-card reveal" style="animation-delay:0.2s">
+        <div class="project-visual" style="background:linear-gradient(135deg,rgba(255,210,63,0.15),rgba(6,214,160,0.1))">📦</div>
+        <div class="project-body">
+          <div class="project-tags"><span class="tag">Airflow</span><span class="tag">dbt</span><span class="tag">Snowflake</span></div>
+          <h3>E-Commerce Data Warehouse</h3>
+          <p>Designed and deployed a full data warehouse with automated ETL pipelines processing 1M+ daily transactions for a retail company.</p>
+          <a href="#contact" class="project-link">View Case Study →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="section-inner">
+    <div class="section-label">Testimonials</div>
+    <div class="section-title">What Clients <span class="gradient-text">Say</span></div>
+
+    <div class="testimonials-grid">
+      <div class="testimonial-card reveal">
+        <div class="stars">★★★★★</div>
+        <p>"Yalem transformed our raw healthcare data into a prediction system that genuinely improved patient outcomes. Her depth in both ML and domain understanding is rare."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar" style="background:rgba(255,107,53,0.15);color:var(--c1)">AD</div>
+          <div>
+            <div class="author-name">Dr. Aster Demeke</div>
+            <div class="author-role">Chief Medical Officer, HealthBridge</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card reveal" style="animation-delay:0.1s">
+        <div class="stars">★★★★★</div>
+        <p>"We went from spreadsheets to a live analytics dashboard in 6 weeks. Yalem's communication and technical skills together are what made this project a success."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar" style="background:rgba(6,214,160,0.15);color:var(--c3)">MB</div>
+          <div>
+            <div class="author-name">Makena Bosire</div>
+            <div class="author-role">Head of Growth, Savanna Finance</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card reveal" style="animation-delay:0.2s">
+        <div class="stars">★★★★★</div>
+        <p>"The computer vision model Yalem built saved our team hundreds of hours of manual review per week. Highly recommend for any AI engagement."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar" style="background:rgba(255,210,63,0.15);color:var(--c2)">TK</div>
+          <div>
+            <div class="author-name">Teddy Kebede</div>
+            <div class="author-role">CTO, AgroSense Ethiopia</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="section-label">Get In Touch</div>
+    <div class="section-title">Let's Build Something <span class="gradient-text">Together</span></div>
+
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <h3>Open to collaborations, consulting, and full-time roles.</h3>
+        <p>Whether you're a company looking for a data science partner or an individual with a challenging problem — I'd love to hear about it.</p>
+
+        <div class="contact-methods">
+          <a href="mailto:yalem.tilahun@email.com" class="contact-method">
+            <span class="contact-method-icon">✉️</span>
+            <div>
+              <div class="contact-method-label">Email</div>
+              <div class="contact-method-value">yalem.tilahun@email.com</div>
+            </div>
+          </a>
+          <a href="https://linkedin.com" class="contact-method" target="_blank">
+            <span class="contact-method-icon">💼</span>
+            <div>
+              <div class="contact-method-label">LinkedIn</div>
+              <div class="contact-method-value">linkedin.com/in/yalemtilahun</div>
+            </div>
+          </a>
+          <a href="https://github.com" class="contact-method" target="_blank">
+            <span class="contact-method-icon">🐙</span>
+            <div>
+              <div class="contact-method-label">GitHub</div>
+              <div class="contact-method-value">github.com/yalemtilahun</div>
+            </div>
+          </a>
+          <div class="contact-method">
+            <span class="contact-method-icon">📍</span>
+            <div>
+              <div class="contact-method-label">Location</div>
+              <div class="contact-method-value">Addis Ababa, Ethiopia · Remote Worldwide</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-form reveal" style="animation-delay:0.1s">
+        <h3>Send a Message</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fname">First Name</label>
+            <input type="text" id="fname" placeholder="Jane" />
+          </div>
+          <div class="form-group">
+            <label for="lname">Last Name</label>
+            <input type="text" id="lname" placeholder="Smith" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" placeholder="jane@company.com" />
+        </div>
+        <div class="form-group">
+          <label for="org">Organization (optional)</label>
+          <input type="text" id="org" placeholder="Acme Inc." />
+        </div>
+        <div class="form-group">
+          <label for="subject">What do you need help with?</label>
+          <select id="subject">
+            <option value="">Select a service...</option>
+            <option>Machine Learning & AI</option>
+            <option>Data Analysis & Visualization</option>
+            <option>Deep Learning & Computer Vision</option>
+            <option>Full-Stack Data Engineering</option>
+            <option>AI Consulting & Strategy</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" rows="4" placeholder="Tell me about your project or challenge..."></textarea>
+        </div>
+        <button class="form-submit" onclick="handleSubmit()">Send Message ✉️</button>
+        <div class="form-success" id="formSuccess">
+          ✅ Thanks! Your message has been received. Yalem will get back to you within 48 hours.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Yalem Tilahun</div>
+  <div class="footer-copy">© 2025 Yalem Tilahun. All rights reserved.</div>
+  <div class="footer-socials">
+    <a href="mailto:yalem.tilahun@email.com" class="social-link" title="Email">✉</a>
+    <a href="https://linkedin.com" class="social-link" target="_blank" title="LinkedIn">in</a>
+    <a href="https://github.com" class="social-link" target="_blank" title="GitHub">⌥</a>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Form submit
+  function handleSubmit() {
+    const email = document.getElementById('email').value.trim();
+    const msg = document.getElementById('message').value.trim();
+    if (!email || !msg) {
+      alert('Please fill in your email and message.');
+      return;
+    }
+    const success = document.getElementById('formSuccess');
+    success.style.display = 'block';
+    setTimeout(() => { success.style.display = 'none'; }, 5000);
+    document.getElementById('fname').value = '';
+    document.getElementById('lname').value = '';
+    document.getElementById('email').value = '';
+    document.getElementById('org').value = '';
+    document.getElementById('subject').value = '';
+    document.getElementById('message').value = '';
+  }
+
+  // Smooth nav active state
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 200) current = s.id; });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current ? 'var(--text)' : '';
+    });
+  });
+</script>
+</body>
+</html>
